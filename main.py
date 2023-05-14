@@ -84,7 +84,7 @@ def add_product_to_cart(token, product, cart_id):
         "Content-Type": "application/json",
     }
 
-    json_data = {
+    cart = {
         "data": {
             "type": "custom_item",
             "name": product["attributes"]["name"],
@@ -99,19 +99,7 @@ def add_product_to_cart(token, product, cart_id):
     response = requests.post(
         f"https://api.moltin.com/v2/carts/{cart_id}/items",
         headers=headers,
-        json=json_data
-    )
-    response.raise_for_status()
-    return response.json()
-
-
-def get_cart_items(token, cart_id):
-    headers = {
-        "Authorization": token,
-    }
-    response = requests.get(
-        f"https://api.moltin.com/v2/carts/{cart_id}/items",
-        headers=headers
+        json=cart
     )
     response.raise_for_status()
     return response.json()
@@ -126,12 +114,12 @@ def main() -> None:
     access_token = get_access_token(client_secret, client_id)
     raw_products, inventories = get_products(access_token)
     # create_customer(access_token)
-    cart_name = "Fish"
-    cart_id = "101"
+    cart_name = "Fi"
+    cart_id = "1012"
     product = raw_products[0]
     # create_cart(access_token, cart_name, cart_id)
-    get_cart(access_token, cart_id)
-    add_product_to_cart(access_token, product, 'Fish')
+    add_product_to_cart(access_token, product, cart_id)
+    print(get_cart(access_token, cart_id))
 
 
 if __name__ == "__main__":      
